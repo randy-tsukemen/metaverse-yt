@@ -1,4 +1,5 @@
 import { useMoralis } from "react-moralis";
+import Avatar from "./Avatar";
 
 const Message = ({ message }) => {
   const { user } = useMoralis();
@@ -10,6 +11,9 @@ const Message = ({ message }) => {
         isUserMessage ? "justify-end" : "justify-start"
       }`}
     >
+      <div className={`relative h-8 w-8 ${isUserMessage && "order-last ml-2"}`}>
+        <Avatar username={message.get("username")} />
+      </div>
       <div
         className={`flex space-x-4 p-3 rounded-lg ${
           isUserMessage
@@ -19,6 +23,15 @@ const Message = ({ message }) => {
       >
         <p>{message.get("message")}</p>
       </div>
+
+      {/* Timeago stamp */}
+      <p
+        className={`absolute -bottom-5 text-xs ${
+          isUserMessage ? "text-pink-300" : "text-blue-400"
+        }`}
+      >
+        {message.get("username")}
+      </p>
     </div>
   );
 };
